@@ -539,6 +539,14 @@ impl CGDisplay {
             Err(result)
         }
     }
+
+    #[inline]
+    pub fn get_last_mouse_delta() -> (i32, i32) {
+        let mut x = 0;
+        let mut y = 0;
+        unsafe { CGGetLastMouseDelta(&mut x, &mut y) };
+        (x, y)
+    }
 }
 
 impl CGDisplayMode {
@@ -746,6 +754,7 @@ extern "C" {
     pub fn CGDisplayMoveCursorToPoint(display: CGDirectDisplayID, point: CGPoint) -> CGError;
     pub fn CGWarpMouseCursorPosition(point: CGPoint) -> CGError;
     pub fn CGAssociateMouseAndMouseCursorPosition(connected: boolean_t) -> CGError;
+    pub fn CGGetLastMouseDelta(x: *mut i32, y: *mut i32);
 
     // Display Fade Effects
     pub fn CGConfigureDisplayFadeEffect(
